@@ -61,8 +61,8 @@ body {
     padding: 2rem;
     border-radius: var(--border-radius);
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    width: 900px;
-    max-width: 95vw;
+    width: 1100px;
+    max-width: 98vw;
     transition: background-color 0.3s;
 }
 
@@ -116,6 +116,12 @@ main {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
+}
+
+#game-body {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
 }
 
 #path-length-container {
@@ -173,6 +179,7 @@ main {
 }
 
 #svg-container {
+    flex: 1;
     background-color: var(--svg-bg);
     border: 2px solid var(--svg-border);
     border-radius: var(--border-radius);
@@ -182,10 +189,7 @@ main {
 }
 
 #algo-modal {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    width: 300px;
+    width: 320px;
     background: var(--panel-bg);
     border-radius: var(--border-radius);
     border: 1px solid var(--secondary-color);
