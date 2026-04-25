@@ -1,0 +1,439 @@
+:root {
+    --bg-color: #f0f2f5;
+    --card-bg: #ffffff;
+    --primary-color: #3b82f6;
+    --secondary-color: #64748b;
+    --accent-color: #10b981;
+    --error-color: #ef4444;
+    --text-color: #1e293b;
+    --border-radius: 8px;
+    --node-color: #ffffff;
+    --node-stroke: #334155;
+    --node-active: #3b82f6;
+    --node-source: #10b981;
+    --node-target: #f59e0b;
+    --arc-color: #94a3b8;
+    --arc-highlight: #3b82f6;
+    --arc-dijkstra: #f59e0b;
+    --svg-bg: #f8fafc;
+    --svg-border: #e2e8f0;
+    --panel-bg: rgba(255, 255, 255, 0.9);
+    --label-bg: #ffffff;
+    --secondary-hover: #475569;
+    --primary-hover: #2563eb;
+    --accent-hover: #059669;
+}
+
+[data-theme="dark"] {
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --primary-color: #60a5fa;
+    --secondary-color: #94a3b8;
+    --accent-color: #34d399;
+    --text-color: #f1f5f9;
+    --node-color: #1e293b;
+    --node-stroke: #94a3b8;
+    --node-active: #60a5fa;
+    --arc-color: #475569;
+    --svg-bg: #0f172a;
+    --svg-border: #334155;
+    --panel-bg: rgba(30, 41, 59, 0.9);
+    --label-bg: #1e293b;
+    --secondary-hover: #cbd5e1;
+    --primary-hover: #93c5fd;
+    --accent-hover: #6ee7b7;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#game-container {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    width: 900px;
+    max-width: 95vw;
+    transition: background-color 0.3s;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+#header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#theme-toggle {
+    background: none;
+    border: 1px solid var(--secondary-color);
+    color: var(--text-color);
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+#theme-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] #theme-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+#level-info {
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+main {
+    position: relative;
+}
+
+#ui-overlay {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+#path-length-container {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+#controls button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s;
+    margin-left: 0.5rem;
+}
+
+#reset-btn {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+#reset-btn:hover {
+    background-color: var(--secondary-hover);
+}
+
+[data-theme="dark"] #reset-btn {
+    color: #1e293b;
+}
+
+#solution-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+#solution-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+[data-theme="dark"] #solution-btn {
+    color: #1e293b;
+}
+
+#next-level-btn-ui {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+#next-level-btn-ui:hover {
+    background-color: var(--accent-hover);
+}
+
+[data-theme="dark"] #next-level-btn-ui {
+    color: #1e293b;
+}
+
+#svg-container {
+    background-color: var(--svg-bg);
+    border: 2px solid var(--svg-border);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    position: relative;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+#algo-modal {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    width: 300px;
+    background: var(--panel-bg);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    z-index: 20;
+    backdrop-filter: blur(4px);
+    transition: background-color 0.3s;
+}
+
+#algo-modal.hidden {
+    display: none;
+}
+
+.modal-header {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--svg-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--primary-color);
+}
+
+#close-algo-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--secondary-color);
+    line-height: 1;
+}
+
+.modal-body {
+    padding: 1rem;
+    font-size: 0.85rem;
+}
+
+#algo-explanation {
+    margin-bottom: 0.75rem;
+    font-style: italic;
+    color: var(--secondary-color);
+    border-bottom: 1px dashed var(--svg-border);
+    padding-bottom: 0.5rem;
+}
+
+#step-description {
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+.modal-footer {
+    padding: 0.75rem 1rem;
+    background: rgba(0, 0, 0, 0.02);
+    border-top: 1px solid var(--svg-border);
+}
+
+[data-theme="dark"] .modal-footer {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.algo-controls {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.algo-controls button {
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--secondary-color);
+    background: var(--card-bg);
+    color: var(--text-color);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.algo-controls button:hover {
+    background: var(--secondary-color);
+    color: white;
+}
+
+[data-theme="dark"] .algo-controls button:hover {
+    color: #1e293b;
+    background: var(--secondary-color);
+}
+
+#game-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.node {
+    cursor: pointer;
+    transition: transform 0.2s, stroke 0.2s;
+}
+
+.node circle {
+    fill: var(--node-color);
+    stroke: var(--node-stroke);
+    stroke-width: 2;
+    transition: fill 0.3s, stroke 0.3s;
+}
+
+.node.source circle {
+    stroke: var(--node-source);
+    stroke-width: 3;
+}
+
+.node.target circle {
+    stroke: var(--node-target);
+    stroke-width: 3;
+}
+
+.node.active circle {
+    fill: var(--node-active);
+    stroke: var(--node-active);
+}
+
+.node.visited circle {
+    stroke: var(--arc-dijkstra);
+    stroke-width: 3;
+}
+
+.node text {
+    font-size: 12px;
+    font-weight: bold;
+    fill: var(--text-color);
+    pointer-events: none;
+    user-select: none;
+    transition: fill 0.3s;
+}
+
+.arc {
+    stroke-width: 2;
+    transition: stroke-width 0.2s, stroke 0.3s;
+}
+
+.arc.highlight {
+    /* stroke-width handled in JS to override dynamic color line weight if needed, 
+       but we want to keep the color, just increase weight */
+}
+
+.arc.dijkstra {
+    stroke: var(--arc-dijkstra);
+    stroke-width: 3;
+    stroke-dasharray: 5, 5;
+    animation: dash 1s linear infinite;
+}
+
+@keyframes dash {
+    to {
+        stroke-dashoffset: -10;
+    }
+}
+
+.arc-label {
+    font-size: 14px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.dist-label {
+    font-size: 10px;
+    fill: var(--arc-dijkstra);
+    font-weight: bold;
+}
+
+#message-banner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--panel-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    text-align: center;
+    z-index: 10;
+    border: 2px solid var(--accent-color);
+    backdrop-filter: blur(4px);
+    transition: background-color 0.3s;
+}
+
+#message-banner.hidden {
+    display: none;
+}
+
+.banner-content h2 {
+    color: var(--accent-color);
+    margin-top: 0;
+}
+
+.banner-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+#review-level-btn {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#review-level-btn:hover {
+    background-color: var(--secondary-hover);
+}
+
+[data-theme="dark"] #review-level-btn {
+    color: #1e293b;
+}
+
+#next-level-btn {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#next-level-btn:hover {
+    background-color: var(--accent-hover);
+}
+
+[data-theme="dark"] #next-level-btn {
+    color: #1e293b;
+}
+
+footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+}

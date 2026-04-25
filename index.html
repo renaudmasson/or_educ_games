@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OR Educ Games - Shortest Path</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <header>
+            <h1>Shortest Path Game</h1>
+            <div id="header-right">
+                <button id="theme-toggle" aria-label="Toggle dark mode">🌙 Dark Mode</button>
+                <div id="level-info">Level: <span id="current-level">1</span>/5</div>
+            </div>
+        </header>
+        
+        <main>
+            <div id="ui-overlay">
+                <div id="path-length-container">Current Path Length: <span id="path-length">0</span></div>
+                <div id="controls">
+                    <button id="reset-btn">Reset</button>
+                    <button id="solution-btn">Solution</button>
+                    <button id="next-level-btn-ui" class="hidden">Next Level</button>
+                </div>
+            </div>
+            
+            <div id="svg-container">
+                <svg id="game-svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid meet"></svg>
+                
+                <div id="algo-modal" class="hidden">
+                    <div class="modal-header">
+                        <h3>Dijkstra's Algorithm</h3>
+                        <button id="close-algo-btn">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="algo-explanation">
+                            <p>Dijkstra's algorithm finds the shortest path by iteratively visiting the "closest" unvisited node and updating the distances to its neighbors.</p>
+                        </div>
+                        <div id="step-description">Click Play or Step to begin.</div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="algo-controls">
+                            <button id="algo-play-pause" title="Play/Pause">▶ Play</button>
+                            <button id="algo-step" title="Next Step">Step ⏭</button>
+                            <button id="algo-skip" title="Skip to End">Skip 🏁</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="message-banner" class="hidden">
+                <div class="banner-content">
+                    <h2 id="banner-title">Congratulations!</h2>
+                    <p id="banner-message">You found the shortest path!</p>
+                    <div class="banner-controls">
+                        <button id="review-level-btn">Review Level</button>
+                        <button id="next-level-btn">Next Level</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Find the shortest path from the leftmost node to the rightmost node.</p>
+        </footer>
+    </div>
+
+    <script src="src/graph.js"></script>
+    <script src="src/renderer.js"></script>
+    <script src="src/game.js"></script>
+</body>
+</html>
